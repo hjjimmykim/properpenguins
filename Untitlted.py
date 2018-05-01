@@ -44,7 +44,7 @@ def create_agent_utility(num_types, max_utility):
 def reward(share, utility):
     return np.dot(utility, share)
     
-    class combined_policy(nn.Module):
+class combined_policy(nn.Module):
     def __init__(self, embedding_dim = 100, num_layers = 1, bias = True, batch_first = True, dropout = 0, bidirectional = False):
         super(combined_policy, self).__init__()
         
