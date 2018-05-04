@@ -61,6 +61,7 @@ def rewards_func(share, utility, pool, log_p, baseline):
     reward = reward.float() # Convert to float tensor
 
     reward_loss = -log_p * (reward - baseline) # REINFORCE algorithm with baseline
+
     reward_loss = reward_loss.mean() # Average over batches
     
     return reward, reward_loss
