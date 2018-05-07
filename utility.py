@@ -78,6 +78,7 @@ def rewards_func_test(share, utility, pool):
     # sys.float_info.min to ensure no division by zero (pytorch seems to be prone to crashing in such scenarios)
     # Note: When max. possible reward = 0 (actual reward = 0 necessarily), above prescription will lead to zero reward, which is bad (compared to baseline); but the agents didn't really have any freedom of action so should they still be penalized?
     reward = torch.sum(utility*share,1).numpy()/(torch.sum(utility*pool,1).numpy()+sys.float_info.min)
+
     reward = torch.from_numpy(reward).view(-1,1) # Change shape to batch_size x 1
     reward = reward.float() # Convert to float tensor
     
