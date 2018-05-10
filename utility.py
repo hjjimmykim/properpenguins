@@ -73,7 +73,7 @@ def rewards_func(share, utility, pool, log_p, baseline):
 
     reward_loss = -log_p * (reward - baseline) # REINFORCE algorithm with baseline
 
-    reward_loss = reward_loss.mean() # Average over batches
+    reward_loss = reward_loss.sum() # Average over batches
     
     return reward, reward_loss
 
