@@ -11,12 +11,19 @@ import calc_rewards
 import alive_sieve
 import numpy as np
 
+# Additions ---------------------
+import time
+N_ep = 10000
+
+ep_time = int(max(1,N_ep/10))
+ep_rec = int(max(1,N_ep/1000))
+# -------------------------------
         
 test_seed = None
 batch_size = 128
 enable_cuda = True
 enable_comms = True
-enable_proposal = False
+enable_proposal = True
 term_entropy_reg = 0.05
 utterance_entropy_reg = 0.0001
 proposal_entropy_reg = 0.005
@@ -52,7 +59,10 @@ baseline = type_constr.FloatTensor(3).fill_(0)
 t_reward = []
 t_reward1 = []
 t_reward2 = []
-for epoch in range(100000):
+
+t_start = time.time()
+t_p1 = time.time()
+for epoch in range(N_ep):
     batch = sampling.generate_training_batch(batch_size=batch_size, test_hashes=test_hashes, random_state=train_r)
     actions, rewards, steps, alive_masks, entropy_loss_by_agent, \
                 term_probss, message   = utils.run_episode(
@@ -97,7 +107,7 @@ for epoch in range(100000):
     steps_sum += steps.sum()
     baseline = 0.7 * baseline + 0.3 * rewards.mean(0)
     count_sum += batch_size
-    if epoch% 1 == 0:
+    if epoch% ep_rec == 0:
         test_rewards_sum = 0
         test_rewards_sum1 = 0
         test_rewards_sum2 = 0
@@ -124,3 +134,14 @@ for epoch in range(100000):
         np.savetxt("./test_rewards_TFT2_sum2.csv", np.array(t_reward2))
         for a in range(len(agent_models)):
             torch.save(agent_models[a].state_dict(), "./saved_models_TFT2_0500105_agent%i"%a) 
+            
+    if (epoch % ep_time == 0) and (epoch != 0):
+        t_p2 = time.time()
+        print('Runtime for episodes ' + str(epoch-ep_time) + '-' + str(epoch) + ': ' + str(t_p2-t_p1) + ' s')
+        t_p1 = t_p2
+        
+t_finish = time.time()
+print('Total runtime: ' + str(t_finish-t_start) + ' s')
+        
+            
+            
