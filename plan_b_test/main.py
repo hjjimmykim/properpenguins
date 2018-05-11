@@ -49,11 +49,10 @@ steps_sum = 0
 count_sum = 0
 
 baseline = type_constr.FloatTensor(3).fill_(0)
-
 t_reward = []
 t_reward1 = []
 t_reward2 = []
-for epoch in range(10):
+for epoch in range(100000):
     batch = sampling.generate_training_batch(batch_size=batch_size, test_hashes=test_hashes, random_state=train_r)
     actions, rewards, steps, alive_masks, entropy_loss_by_agent, \
                 term_probss, message   = utils.run_episode(
@@ -90,6 +89,7 @@ for epoch in range(10):
                     reward_loss_by_agent[agent] += _reward_loss
         for i in range(2):
             loss = entropy_loss_by_agent[i] + reward_loss_by_agent[i]
+            #print(entropy_loss_by_agent[i])
             loss.backward()
             agent_opts[i].step()
             
@@ -97,7 +97,7 @@ for epoch in range(10):
     steps_sum += steps.sum()
     baseline = 0.7 * baseline + 0.3 * rewards.mean(0)
     count_sum += batch_size
-    if epoch% 100 == 0:
+    if epoch% 1 == 0:
         test_rewards_sum = 0
         test_rewards_sum1 = 0
         test_rewards_sum2 = 0
