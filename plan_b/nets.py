@@ -73,7 +73,7 @@ class TermPolicy(nn.Module):
         
         term_probs = term_probs + eps
         #entropy = - (term_probs * term_probs.log()).sum(1).sum()
-        entropy = - (term_probs * term_probs.log()).sum(1).mean()
+        entropy = - (term_probs * term_probs.log()).sum(1).sum()
         return term_probs, log_g, a.byte(), entropy
           #nn_output  #logprob_to_get_a(backward)
     
@@ -127,7 +127,7 @@ class UtterancePolicy(nn.Module):
             utterance[:, i] = last_token
             probs = probs + eps
             #entropy -= (probs * probs.log()).sum(1).sum()
-            entropy -= (probs * probs.log()).sum(1).mean()
+            entropy -= (probs * probs.log()).sum(1).sum()
         return utterance_nodes, utterance, entropy
            #logprob_to_get_utterance(backward)
     
@@ -170,7 +170,7 @@ class ProposalPolicy(nn.Module):
                 nodes.append(log_g)
             probs = probs + eps
 #            entropy += (- probs * probs.log()).sum(1).sum()
-            entropy += (- probs * probs.log()).sum(1).mean()
+            entropy += (- probs * probs.log()).sum(1).sum()
             proposal[:, i] = a.view(-1)
 
         return nodes, proposal, entropy
