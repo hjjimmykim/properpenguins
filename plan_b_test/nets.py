@@ -72,8 +72,8 @@ class TermPolicy(nn.Module):
             a = res_greedy
         
         term_probs = term_probs + eps
-        #entropy = - (term_probs * term_probs.log()).sum(1).sum()
-        entropy = - (term_probs * term_probs.log()).sum(1).mean()
+        entropy = - (term_probs * term_probs.log()).sum(1).sum()
+        #entropy = - (term_probs * term_probs.log()).sum(1).mean()
         return term_probs, log_g, a.byte(), entropy
           #nn_output  #logprob_to_get_a(backward)
     
@@ -126,8 +126,8 @@ class UtterancePolicy(nn.Module):
             last_token = a.view(batch_size)
             utterance[:, i] = last_token
             probs = probs + eps
-            #entropy -= (probs * probs.log()).sum(1).sum()
-            entropy -= (probs * probs.log()).sum(1).mean()
+            entropy -= (probs * probs.log()).sum(1).sum()
+            #entropy -= (probs * probs.log()).sum(1).mean()
         return utterance_nodes, utterance, entropy
            #logprob_to_get_utterance(backward)
     
@@ -169,8 +169,8 @@ class ProposalPolicy(nn.Module):
             if log_g is not None:
                 nodes.append(log_g)
             probs = probs + eps
-#            entropy += (- probs * probs.log()).sum(1).sum()
-            entropy += (- probs * probs.log()).sum(1).mean()
+            entropy += (- probs * probs.log()).sum(1).sum()
+            #entropy += (- probs * probs.log()).sum(1).mean()
             proposal[:, i] = a.view(-1)
 
         return nodes, proposal, entropy

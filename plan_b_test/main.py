@@ -95,7 +95,7 @@ for epoch in range(N_ep):
                     _reward = _rewards[global_idxes].float().contiguous().view(
                         sieve_playback.batch_size, 1)
                     _reward_loss = - (action * Variable(_reward))
-                    _reward_loss = _reward_loss.mean()
+                    _reward_loss = _reward_loss.sum()
                     reward_loss_by_agent[agent] += _reward_loss
         for i in range(2):
             loss = entropy_loss_by_agent[i] + reward_loss_by_agent[i]
