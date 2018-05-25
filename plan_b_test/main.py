@@ -13,7 +13,7 @@ import numpy as np
 
 # Additions ---------------------
 import time
-N_ep = 10000
+N_ep = 50000
 
 ep_time = int(max(1,N_ep/10))
 ep_rec = int(max(1,N_ep/1000))
@@ -24,9 +24,9 @@ batch_size = 128
 enable_cuda = True
 enable_comms = True
 enable_proposal = True
-term_entropy_reg = 0.05
-utterance_entropy_reg = 0.0001
-proposal_entropy_reg = 0.005
+term_entropy_reg = -0.05
+utterance_entropy_reg = -0.0001
+proposal_entropy_reg = -0.005
 train_r = np.random
 prosocial = False
 
