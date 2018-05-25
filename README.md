@@ -16,4 +16,3 @@ To do:
   7. Replicate paper <br>
   8. Party <br>
   9. Do something new <br>
-  10. Publish in Nature and Science and Cell and shit
