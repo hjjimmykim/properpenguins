@@ -101,6 +101,9 @@ def rewards_func_prosocial(share1, share2, utility1, utility2, pool, log_p, base
     
     reward = (torch.sum(share1*utility1,1).float() + torch.sum(share2*utility2,1).float())/scale
     
+    reward = reward.view(-1,1) # Change shape to batch_size x 1
+    reward = reward.float() # Convert to float tensor
+    
     reward_loss = -log_p * (reward - baseline) # REINFORCE algorithm with baseline
 
     reward_loss = reward_loss.sum() # Average over batches
