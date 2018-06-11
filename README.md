@@ -15,3 +15,9 @@ To do:
   7. Replicate paper <br>
   8. Party <br>
   9. Do something new <br>
+
+Ideas for implementing noise <br>
+1. Replace some numbers with dummy symbol.
+2. Randomly change number.
+3. Random noise (Gaussian or Poisson).
+4. Add noise to network weights?
