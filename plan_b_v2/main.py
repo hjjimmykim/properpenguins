@@ -21,7 +21,7 @@ term_entropy_reg = 0.05
 utterance_entropy_reg = 0.001
 proposal_entropy_reg = 0.05
 train_r = np.random
-prosocial = True
+prosocial = False
 
 test_r = np.random.RandomState(test_seed)
 test_batches = sampling.generate_test_batches(batch_size=batch_size, num_batches=5, random_state=test_r)
@@ -53,7 +53,7 @@ baseline = type_constr.FloatTensor(3).fill_(0)
 t_reward = []
 t_reward1 = []
 t_reward2 = []
-for epoch in range(500000):
+for epoch in range(200000):
     batch = sampling.generate_training_batch(batch_size=batch_size, test_hashes=test_hashes, random_state=train_r)
     actions, rewards, steps, alive_masks, entropy_loss_by_agent, \
                 term_probss, message   = utils.run_episode(
